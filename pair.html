@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HANSTZ_SESSIONS.SITE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      font-family: 'Orbitron', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background: url('https://i.ibb.co/mCZf28Nm/nexus-xmd.jpg') no-repeat center center;
+      background-size: auto; /* Keeps the original image size */
+      background-attachment: fixed;
+      overflow: hidden;
+    }
+
+    .frame {
+      background: rgba(0, 0, 0, 0.8);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+      text-align: center;
+      max-width: 280px;
+      width: 100%;
+    }
+
+    .typing {
+      font-family: 'Playfair Display', serif;
+      color: #e9e4e4;
+      font-size: 1.1rem;
+      animation: colorChange 3s infinite;
+    }
+
+    @keyframes colorChange {
+      0% { color: red; }
+      25% { color: yellow; }
+      50% { color: green; }
+      75% { color: blue; }
+      100% { color: purple; }
+    }
+
+    .input-container {
+      margin-top: 15px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .input-container input {
+      width: 160px;
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: none;
+      background: #f1f1f1;
+    }
+
+    .input-container button {
+      padding: 10px 12px;
+      background: red;
+      color: white;
+      border: none;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    #waiting-message {
+      margin-top: 10px;
+      font-size: 1rem;
+      color: #ffcc00;
+      display: none;
+    }
+
+    #copy-btn {
+      display: none;
+      margin-top: 10px;
+      padding: 8px 12px;
+      font-size: 14px;
+      background-color: #222;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #play-btn {
+      margin-top: 15px;
+      padding: 8px 15px;
+      font-weight: bold;
+      background: #00cc66;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="frame">
+    <p class="typing">WELCOME TO HANS_TZ PAIR SITE</p>
+
+    <div class="input-container">
+      <input placeholder="255760XXXX" type="number" id="number">
+      <button id="submit">SUBMIT</button>
+    </div>
+
+    <p id="waiting-message">Please Wait...</p>
+    <button id="copy-btn">📋 Copy Code</button>
+    <button id="play-btn">▶️ Play Song</button>
+  </div>
+
+  <audio id="background-audio">
+    <source src="https://github.com/Mrhanstz/HANS-XMD_V3/raw/refs/heads/main/Hans-Tz/HansTz.mp3" type="audio/mp3">
+  </audio>
+
+  <script>
+    const msg = document.getElementById("waiting-message");
+    const submitBtn = document.getElementById("submit");
+    const numberInput = document.getElementById("number");
+    const copyBtn = document.getElementById("copy-btn");
+    const audio = document.getElementById("background-audio");
+    const playBtn = document.getElementById("play-btn");
+
+    submitBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      const value = numberInput.value.replace(/[^0-9]/g, "");
+
+      if (!value) {
+        msg.innerText = "Enter your WhatsApp number with Country Code";
+        msg.style.color = "white";
+        msg.style.display = "block";
+        copyBtn.style.display = "none";
+        return;
+      }
+
+      if (value.length < 11) {
+        msg.innerText = "Invalid Number";
+        msg.style.color = "red";
+        msg.style.display = "block";
+        copyBtn.style.display = "none";
+        return;
+      }
+
+      msg.innerText = "Please Wait...";
+      msg.style.color = "#ffcc00";
+      msg.style.display = "block";
+
+      try {
+        const res = await fetch(`/code?number=${value}`);
+        const data = await res.json();
+        const code = data.code || "Service Unavailable";
+
+        msg.innerText = "CODE: " + code;
+        msg.style.color = "white";
+
+        copyBtn.style.display = "inline-block";
+        copyBtn.onclick = () => {
+          navigator.clipboard.writeText(code);
+          copyBtn.innerText = "✅ Copied!";
+          setTimeout(() => (copyBtn.innerText = "📋 Copy Code"), 2000);
+        };
+      } catch (err) {
+        msg.innerText = "Error fetching code.";
+        msg.style.color = "red";
+        copyBtn.style.display = "none";
+      }
+    });
+
+    playBtn.addEventListener("click", () => {
+      audio.play();
+    });
+  </script>
+
+</body>
+</html>
