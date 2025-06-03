@@ -66,13 +66,13 @@ router.get('/', async (req, res) => {
 > Then on creds.json 🤞 paste you session code
 
 > BOT REPO FORK 
-> https://github.com/Mrhanstz/HANS-XMD_V2/fork
+> https://github.com/Azahacko/SPIRITY-XMD-BOT_PAIR/fork
 
 > FOLLOW MY WHATSAPP CHANNEL 
-> https://whatsapp.com/channel/0029VasiOoR3bbUw5aV4qB31
+> https://whatsapp.com/channel/0029VbAMJ3uL7UVYmOUkpz0E
 
 > FOLLOW MY GIT
-> https://github.com/Mrhanstz`
+> https://github.com/Azahacko`
                     }, { quoted: Hansses });
 
                     await delay(100);
