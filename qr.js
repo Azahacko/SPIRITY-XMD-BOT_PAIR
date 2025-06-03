@@ -65,7 +65,7 @@ router.get('/', async (req, res) => {
 
 > Upload creds.json to sessions/creds.json
 
-> BOT REPO: https://github.com/Mrhanstz/SPIRITY-XMD-BOT_PAIR/fork
+> BOT REPO: https://github.com/Azahacko/SPIRITY-XMD-BOT_PAIR/fork
 
 > WHATSAPP CHANNEL: https://whatsapp.com/channel/0029VbAMJ3uL7UVYmOUkpz0E
 
